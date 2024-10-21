@@ -1,0 +1,17 @@
+- name: Check Version Endpoint
+  scenario:
+    - name: Call /version
+      request:
+        method: GET
+        url: http://localhost:8080/version
+      response:
+        status: 200
+
+- name: Check Temperature Endpoint
+  scenario:
+    - name: Call /temperature
+      request:
+        method: GET
+        url: http://localhost:8080/temperature
+      response:
+        status: 200
