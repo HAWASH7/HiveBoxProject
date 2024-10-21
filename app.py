@@ -48,19 +48,16 @@ def get_average_temperature():
         total_temp = 0
         count = 0
 
-        # Check each box for temperature data
         for box in boxes:
-            # Assuming each box has a 'sensorData' key with temperature data
             for sensor in box.get('sensorData', []):
                 if sensor['type'] == 'temperature':
-                    # Check if data is within the last hour
                     timestamp = datetime.fromisoformat(sensor['timestamp'])
                     if datetime.now() - timestamp <= timedelta(hours=1):
                         total_temp += sensor['value']
                         count += 1
 
         if count == 0:
-            return {"error": "No recent temperature data available"}, 404  # Not found if no data
+            return {"error": "No recent temperature data available"}, 404  
 
         average_temp = total_temp / count
         return {"average_temperature": average_temp}, 200
