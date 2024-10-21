@@ -1,0 +1,13 @@
+prometheus:
+  enabled: true
+  scrapeInterval: 15s
+
+logs:
+  enabled: true
+  configs:
+    - name: default
+      clients:
+        - url: https://<LOKI_ENDPOINT>/loki/api/v1/push
+          basicAuth:
+            username: <YOUR_API_KEY>
+            password: ''
