@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request, redirect, url_for
 import sys
 import os
 import random
+import redis
 
 app = Flask(__name__)
 
@@ -70,7 +71,6 @@ def store_data():
     redis_client.set('my_key', 'data_value', ex=300) 
     return jsonify({"message": "Data stored in cache"}), 200
 
-from minio import Minio
 
 minio_client = Minio('localhost:9000',
                       access_key='minioadmin',
@@ -78,17 +78,6 @@ minio_client = Minio('localhost:9000',
                       secure=False)
 
 @app.route('/store', methods=['POST'])
-def store_data():
-    redis_client.set('my_key', 'data_value', ex=300)
-
-    minio_client.put_object('mybucket', 'data_object', data=b'data_value', length=len(b'data_value'))
-    return jsonify({"message": "Data stored in Redis and MinIO"}), 200
-
-
-@app.route('/metrics', methods=['GET'])
-def metrics():
-    return jsonify({"message": "Metrics extended"}), 200
-
 
 
 @app.route('/readyz', methods=['GET'])
