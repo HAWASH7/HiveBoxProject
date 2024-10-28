@@ -13,4 +13,4 @@ def test_get_sensor_data():
 def test_get_average_temperature():
     client = app.test_client()
     response = client.get('/temperature')
-    assert response.status_code in (200, 404)  # It should either return 200 or 404
+    assert response.status_code in (200, 404)  
