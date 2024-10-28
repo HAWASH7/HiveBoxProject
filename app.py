@@ -6,22 +6,18 @@ import redis
 
 app = Flask(__name__)
 
-# Load configuration from environment variables
 APP_VERSION = os.getenv("APP_VERSION", "v0.0.1")
 DEFAULT_TEMPERATURE = float(os.getenv("DEFAULT_TEMPERATURE", 20.0))
 
-# Function to print the app version and exit
 def print_version():
     print(f"Current app version: {APP_VERSION}")
     sys.exit()
 
-# Route for version
 @app.route('/version', methods=['GET'])
 def version():
     print_version()
     return "", 200
 
-# Route for metrics
 @app.route('/metrics', methods=['GET'])
 def metrics():
     metrics_data = {
