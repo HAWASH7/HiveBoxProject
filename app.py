@@ -1,8 +1,10 @@
-from flask import Flask, jsonify, request, redirect, url_for
 import sys
 import os
 import random
 import redis
+from minio import Minio
+from flask import Flask, jsonify, request
+
 
 app = Flask(__name__)
 
@@ -79,4 +81,10 @@ minio_client = Minio('localhost:9000',
 @app.route('/readyz', methods=['GET'])
 def readyz():
     return "", 200 
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    file = request.files['file']
+    minio_client.put_object('mybucket', file.filename, file, file.content_length)
+    return jsonify({"message": "File uploaded successfully"}), 201
 
