@@ -1,0 +1,27 @@
+name: Kubernetes Deployment
+
+on:
+  push:
+    branches:
+      - main
+      - feature/*
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up kubectl
+      uses: azure/setup-kubectl@v1
+      with:
+        version: 'latest'
+
+    - name: Deploy to KIND
+      run: |
+        kind create cluster --config kind-config.yaml
+        kubectl apply -f ingress-nginx.yaml
+        kubectl apply -f app-deployment.yaml
+        kubectl apply -f app-service.yaml
